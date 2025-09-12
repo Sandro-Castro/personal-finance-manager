@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FinancialGoal>
@@ -22,6 +23,7 @@ class FinancialGoalFactory extends Factory
             'deadline' => $this->faker->dateTimeBetween('now', '+2 years'),
             'status' => $this->faker->randomElement($statuses),
             'description' => $this->faker->paragraph(),
+            'user_id' => User::factory()
         ];
     }
 }

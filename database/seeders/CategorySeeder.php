@@ -2,20 +2,25 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Category;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
     
     public function run(): void
     {
+        $user = User::all();
+
        Category::create([
             'name' => 'Salário',
             'type' => 'income',
             'color' => '#10B981',
             'icon' => '💰',
-            'description' => 'Salário mensal'
+            'description' => 'Salário mensal',
+            'user_id' => $user->id
+            
         ]);
         
         Category::create([
@@ -23,14 +28,17 @@ class CategorySeeder extends Seeder
             'type' => 'income',
             'color' => '#10B981',
             'icon' => '💻',
-            'description' => 'Trabalhos freelancer'
+            'description' => 'Trabalhos freelancer',
+            'user_id' => $user->id
+             
         ]);
         Category::create([
             'name' => 'Alimentação',
             'type' => 'expense',
             'color' => '#EF4444',
             'icon' => '🍔',
-            'description' => 'Gastos com alimentação'
+            'description' => 'Gastos com alimentação',
+            'user_id' => $user->id
         ]);
         
         Category::create([
@@ -38,14 +46,16 @@ class CategorySeeder extends Seeder
             'type' => 'expense',
             'color' => '#EF4444',
             'icon' => '🚗',
-            'description' => 'Gastos com transporte'
+            'description' => 'Gastos com transporte',
+            'user_id' => $user->id
         ]);
         Category::create([
             'name' => 'Moradia',
             'type' => 'expense',
             'color' => '#EF4444',
             'icon' => '🏠',
-            'description' => 'Gastos com moradia'
+            'description' => 'Gastos com moradia',
+            'user_id' => $user->id
         ]);
         
 

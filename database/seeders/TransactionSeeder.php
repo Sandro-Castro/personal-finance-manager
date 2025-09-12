@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
@@ -12,6 +13,7 @@ class TransactionSeeder extends Seeder
     public function run(): void
     {
          $categories = Category::all();
+         $user = User::all();
 
         Transaction::create([
             'description' => 'Salário do mês',
@@ -19,6 +21,7 @@ class TransactionSeeder extends Seeder
             'date' => now()->startOfMonth(),
             'type' => 'income',
             'category_id' => $categories->where('name', 'Salário')->first()->id,
+            'user_id' => $user->id,
             'notes' => 'Salário recebido pela empresa',
         ]);
 
@@ -28,6 +31,7 @@ class TransactionSeeder extends Seeder
             'date' => now()->subDays(5),
             'type' => 'expense',
             'category_id' => $categories->where('name', 'Moradia')->first()->id,
+            'user_id' => $user->id,
             'notes' => 'Conta de luz do mês',
         ]);
 
@@ -37,6 +41,7 @@ class TransactionSeeder extends Seeder
             'date' => now()->subDays(3),
             'type' => 'expense',
             'category_id' => $categories->where('name', 'Alimentação')->first()->id,
+            'user_id' => $user->id,
             'notes' => 'Compra do mês no supermercado',
         ]);
 
@@ -46,6 +51,7 @@ class TransactionSeeder extends Seeder
             'date' => now()->subDays(10),
             'type' => 'income',
             'category_id' => $categories->where('name', 'Freelance')->first()->id,
+            'user_id' => $user->id,
             'notes' => 'Pagamento pelo projeto de website',
         ]);
 

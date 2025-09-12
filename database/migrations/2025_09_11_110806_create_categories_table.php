@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('color')->default('#3B82F6');
             $table->string('icon')->default('💰');
             $table->text('description')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         
         });

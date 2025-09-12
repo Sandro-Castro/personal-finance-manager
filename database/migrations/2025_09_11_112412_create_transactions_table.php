@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('type'); 
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

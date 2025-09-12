@@ -4,12 +4,15 @@ namespace Database\Seeders;
 
 use App\Models\FinancialGoal;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class FinancialGoalSeeder extends Seeder
 {
     
     public function run(): void
     {
+        $user = User::all();
+        
         FinancialGoal::create([
             'name' => 'Comprar um novo laptop',
             'target_amount' => 5000.00,
@@ -17,6 +20,7 @@ class FinancialGoalSeeder extends Seeder
             'deadline' => now()->addMonths(6),
             'status' => 'in_progress',
             'description' => 'Economizar para comprar um laptop para programação',
+            'user_id' => $user->id
         ]);
 
         FinancialGoal::create([
@@ -26,6 +30,7 @@ class FinancialGoalSeeder extends Seeder
             'deadline' => now()->addYear(),
             'status' => 'in_progress',
             'description' => 'Economizar para uma viagem nas férias',
+            'user_id' => $user->id
         ]);
 
         FinancialGoal::create([
@@ -35,6 +40,7 @@ class FinancialGoalSeeder extends Seeder
             'deadline' => now()->addMonths(18),
             'status' => 'in_progress',
             'description' => 'Criar uma reserva de emergência',
+            'user_id' => $user->id
         ]);
 
         FinancialGoal::factory()->count(5)->create();

@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ class TransactionFactory extends Factory
             'date' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'type' => $type,
             'category_id' => \App\Models\Category::factory(),
+            'user_id' => User::factory(),
             'notes' => $this->faker->sentence(),
         ];
     }

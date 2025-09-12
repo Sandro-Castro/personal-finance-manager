@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('deadline');
             $table->string('status')->default('in_progress'); 
             $table->text('description')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
