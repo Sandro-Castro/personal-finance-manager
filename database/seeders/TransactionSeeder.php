@@ -12,15 +12,22 @@ class TransactionSeeder extends Seeder
     
     public function run(): void
     {
-         $categories = Category::all();
-         $user = User::all();
+        $users = User::all();
+        
+        foreach ($users as $user) {
+            $categories = Category::where('user_id', $user->id)->get();
+            
+            $salarioCategory = $categories->where('name', 'Salário')->first();
+            $moradiaCategory = $categories->where('name', 'Moradia')->first();
+            $alimentacaoCategory = $categories->where('name', 'Alimentação')->first();
+            $freelanceCategory = $categories->where('name', 'Freelance')->first();
 
-        Transaction::create([
+            Transaction::create([
             'description' => 'Salário do mês',
             'amount' => 3000.00,
             'date' => now()->startOfMonth(),
             'type' => 'income',
-            'category_id' => $categories->where('name', 'Salário')->first()->id,
+            'category_id' => $salarioCategory->id,
             'user_id' => $user->id,
             'notes' => 'Salário recebido pela empresa',
         ]);
@@ -30,7 +37,7 @@ class TransactionSeeder extends Seeder
             'amount' => 150.00,
             'date' => now()->subDays(5),
             'type' => 'expense',
-            'category_id' => $categories->where('name', 'Moradia')->first()->id,
+            'category_id' => $moradiaCategory->id,
             'user_id' => $user->id,
             'notes' => 'Conta de luz do mês',
         ]);
@@ -40,7 +47,7 @@ class TransactionSeeder extends Seeder
             'amount' => 350.00,
             'date' => now()->subDays(3),
             'type' => 'expense',
-            'category_id' => $categories->where('name', 'Alimentação')->first()->id,
+            'category_id' => $alimentacaoCategory->id,
             'user_id' => $user->id,
             'notes' => 'Compra do mês no supermercado',
         ]);
@@ -50,10 +57,11 @@ class TransactionSeeder extends Seeder
             'amount' => 1200.00,
             'date' => now()->subDays(10),
             'type' => 'income',
-            'category_id' => $categories->where('name', 'Freelance')->first()->id,
+            'category_id' => $freelanceCategory->id,
             'user_id' => $user->id,
             'notes' => 'Pagamento pelo projeto de website',
         ]);
+    }
 
         Transaction::factory()->count(50)->create();
     }

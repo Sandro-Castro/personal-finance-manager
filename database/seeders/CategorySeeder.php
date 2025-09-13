@@ -11,9 +11,11 @@ class CategorySeeder extends Seeder
     
     public function run(): void
     {
-        $user = User::all();
+        $users = User::all();
+        
+        foreach ($users as $user) {
 
-       Category::create([
+            Category::create([
             'name' => 'Salário',
             'type' => 'income',
             'color' => '#10B981',
@@ -57,8 +59,9 @@ class CategorySeeder extends Seeder
             'description' => 'Gastos com moradia',
             'user_id' => $user->id
         ]);
-        
-
-        Category::factory()->count(5)->create();
+            Category::factory()->count(2)->create([
+                'user_id' => $user->id
+            ]);
+        }
     }
 }

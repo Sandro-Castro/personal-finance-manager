@@ -11,7 +11,8 @@ class FinancialGoalSeeder extends Seeder
     
     public function run(): void
     {
-        $user = User::all();
+        $users = User::all();
+        foreach ($users as $user) {
         
         FinancialGoal::create([
             'name' => 'Comprar um novo laptop',
@@ -42,7 +43,9 @@ class FinancialGoalSeeder extends Seeder
             'description' => 'Criar uma reserva de emergência',
             'user_id' => $user->id
         ]);
-
-        FinancialGoal::factory()->count(5)->create();
+        FinancialGoal::factory()->count(5)->create([
+            'user_id' => $user->id
+        ]);  
+    } 
     }
 }

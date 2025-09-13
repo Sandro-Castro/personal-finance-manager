@@ -27,7 +27,7 @@ class CategoryFactory extends Factory
                     ? $this->faker->randomElement($incomeIcons) 
                     : $this->faker->randomElement($expenseIcons),
             'description' => $this->faker->sentence(),
-            'user_id' => User::factory()
+            'user_id' => User::inRandomOrder()->first()->id  
         ];
     }
 }

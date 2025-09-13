@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 use App\Models\User;
+use App\Models\Category;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,8 +21,8 @@ class TransactionFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 1, 1000),
             'date' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'type' => $type,
-            'category_id' => \App\Models\Category::factory(),
-            'user_id' => User::factory(),
+            'category_id' => Category::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
             'notes' => $this->faker->sentence(),
         ];
     }

@@ -23,7 +23,7 @@ class FinancialGoalFactory extends Factory
             'deadline' => $this->faker->dateTimeBetween('now', '+2 years'),
             'status' => $this->faker->randomElement($statuses),
             'description' => $this->faker->paragraph(),
-            'user_id' => User::factory()
+            'user_id' => fn() => User::inRandomOrder()->first()->id
         ];
     }
 }
