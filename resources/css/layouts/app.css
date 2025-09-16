@@ -1,0 +1,71 @@
+
+:root {
+    --primary-color: #3b71ca;
+    --secondary-color: #9fa6b2;
+    --success-color: #14a44d;
+    --danger-color: #dc4c64;
+    --warning-color: #e4a11b;
+    --info-color: #54b4d3;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    min-height: 100vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    
+}
+
+.sidebar .nav-link {
+    color: #333;
+    border-radius: 0.25rem;
+    margin: 0.25rem 0;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9ecef;
+}
+
+
+.sidebar .nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.card-dashboard {
+    transition: transform 0.2s;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-dashboard:hover {
+    transform: translateY(-5px);
+}
+
+.summary-box {
+    border-left: 4px solid;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 0.25rem;
+    background-color: white;
+}
+
+.income-box {
+    border-left-color: var(--success-color);
+}
+
+.expense-box {
+    border-left-color: var(--danger-color);
+}
+
+.balance-box {
+    border-left-color: var(--primary-color);
+}
