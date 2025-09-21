@@ -42,16 +42,13 @@
                 <strong>{{ Auth::check() ? Auth::user()->name : 'Visitante' }}</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark shadow" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
-                <li><a class="dropdown-item" href="#">Configurações</a></li>
-                <li><hr class="dropdown-divider"></li>
                 <li>
-                    {{--  <a class="dropdown-item" href="{{ route('logout') }}"
+                      <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
                         Sair
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> --}}
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> 
                         @csrf
                     </form>
                 </li>
