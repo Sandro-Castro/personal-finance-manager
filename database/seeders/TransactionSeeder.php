@@ -63,6 +63,6 @@ class TransactionSeeder extends Seeder
         ]);
     }
 
-        Transaction::factory()->count(50)->create();
+        Transaction::factory()->count(10)->create();
     }
 }

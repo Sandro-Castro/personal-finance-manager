@@ -69,3 +69,51 @@ body {
 .balance-box {
     border-left-color: var(--primary-color);
 }
+.table th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.badge {
+    font-size: 0.7rem;
+    padding: 0.35em 0.65em;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.pagination .page-link {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.75rem !important;
+    line-height: 1.2 !important;
+    border-radius: 0.2rem !important;
+
+    
+    display: inline-block;
+}
+.page-item {
+    margin: 0 2px; 
+}
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+}
+
+.form-select-sm, .form-control-sm {
+    border-radius: 0.2rem;
+}

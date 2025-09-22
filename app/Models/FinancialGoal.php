@@ -16,6 +16,7 @@ class FinancialGoal extends Model
         'deadline',
         'status',
         'description',
+        'user_id',
     ];
 
     protected $casts = [

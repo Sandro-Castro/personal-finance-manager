@@ -15,6 +15,7 @@ class Transaction extends Model
         'description',
         'category_id',
         'type',
+        'user_id',
         'notes',
     ];
 

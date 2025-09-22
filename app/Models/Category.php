@@ -16,6 +16,7 @@ class Category extends Model
         'color',
         'icon',
         'description',
+        'user_id'
     ];
 
     public function transactions(): HasMany{
