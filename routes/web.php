@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\FinancialGoalController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -18,9 +20,8 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
     
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/home', [DashboardController::class, 'index'])->name('home');
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
@@ -49,5 +50,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/goals/{id}', [FinancialGoalController::class, 'destroy'])->name('goals.destroy');
     Route::post('/goals/search', [FinancialGoalController::class, 'search'])->name('goals.search');
 
-    
+    // Rotas para Relatórios
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
