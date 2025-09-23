@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Categorias</h2>
     <a href="{{ route('categories.create') }}" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> Nova Categoria
     </a>
@@ -81,9 +80,17 @@
             </div>
             
             <!-- Paginação -->
-            <div class="d-flex justify-content-center mt-4">
-                {{ $categories->links() }}
+             <div class="card-footer bg-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        Mostrando {{ $categories->firstItem() }} a {{ $categories->lastItem() }} de {{ $categories->total() }} resultados
+                    </div>
+                    <div>
+                        {{ $categories->links('pagination::bootstrap-5') }}
+                    </div>
+                </div>
             </div>
+            
         @else
             <div class="text-center py-5">
                 <i class="bi bi-folder-x" style="font-size: 3rem;"></i>

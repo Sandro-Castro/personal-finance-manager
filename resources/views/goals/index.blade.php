@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Metas Financeiras</h2>
     <a href="{{ route('goals.create') }}" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> Nova Meta
     </a>
@@ -77,10 +76,12 @@
                                     Prazo: {{ $goal->deadline->format('d/m/Y') }}
                                 </div>
                                 <div>
-                                    @if($goal->deadline->diffInDays(now(), false) > 0)
-                                        <span class="text-danger">Vencida há {{ $goal->deadline->diffInDays(now()) }} dias</span>
+                                    @if ($goal->days_remaining < 0)
+                                        <span class="text-success">Faltam {{ abs($goal->days_remaining) }} dias</span>
+                                    @elseif ($goal->days_remaining === 0)
+                                        <span class="text-warning">Vence hoje</span>
                                     @else
-                                        Faltam {{ $goal->deadline->diffInDays(now()) }} dias
+                                        <span class="text-danger">Vencida há {{ $goal->days_remaining }} dias</span>
                                     @endif
                                 </div>
                             </div>
@@ -108,9 +109,19 @@
             </div>
             
             <!-- Paginação -->
-            <div class="d-flex justify-content-center mt-4">
-                {{ $goals->links() }}
+            <div class="card-footer bg-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        Mostrando {{ $goals->firstItem() }} a {{ $goals->lastItem() }} de {{ $goals->total() }} resultados
+                    </div>
+                    <div>
+                        {{ $goals->links('pagination::bootstrap-5') }}
+                    </div>
+                </div>
             </div>
+            <!-- <div class="d-flex justify-content-center mt-4">
+                {{ $goals->links('pagination::bootstrap-5') }}
+            </div> -->
         @else
             <div class="text-center py-5">
                 <i class="bi bi-bullseye" style="font-size: 3rem;"></i>

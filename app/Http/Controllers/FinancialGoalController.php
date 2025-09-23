@@ -4,12 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\FinancialGoal;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class FinancialGoalController extends Controller
 {
     public function index()
     {
         $goals = FinancialGoal::where('user_id', auth()->id())->paginate(10);
+
+        $goals->getCollection()->transform(function($goal) {
+        $deadlineDate = Carbon::parse($goal->deadline)->startOfDay(); // força início do dia
+        $today = Carbon::now()->startOfDay(); // também
+        $goal->days_remaining = $deadlineDate->diffInDays($today, false); // false para negativo se venceu
+        return $goal;
+    });
+
         return view('goals.index', compact('goals'));
     }
 
@@ -50,7 +59,7 @@ class FinancialGoalController extends Controller
     public function update(Request $request, $id)
     {
         $goal = FinancialGoal::where('user_id', auth()->id())->findOrFail($id);
-        
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'target_amount' => 'required|numeric|min:0',
@@ -76,9 +85,18 @@ class FinancialGoalController extends Controller
     public function search(Request $request)
     {
         $search = $request->get('search');
+
         $goals = FinancialGoal::where('user_id', auth()->id())
             ->where('name', 'like', "%{$search}%")
             ->paginate(10);
+
+        $goals->getCollection()->transform(function($goal) {
+        $deadlineDate = Carbon::parse($goal->deadline)->startOfDay(); // força início do dia
+        $today = Carbon::now()->startOfDay(); // também
+        $goal->days_remaining = $deadlineDate->diffInDays($today, false); // false para negativo se venceu
+        return $goal;
+    });
+
 
         return view('goals.index', compact('goals'));
     }

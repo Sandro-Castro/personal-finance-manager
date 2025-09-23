@@ -5,7 +5,7 @@
                 <i class="bi bi-wallet2"></i> FinanceManager
             </h4>
         </div>
-        
+
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('home') ? 'active' : '' }}" href="{{ url('/home') }}">

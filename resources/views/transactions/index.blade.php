@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Transações</h2>
     <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-plus-circle"></i> Nova Transação
@@ -142,7 +141,7 @@
                         Mostrando {{ $transactions->firstItem() }} a {{ $transactions->lastItem() }} de {{ $transactions->total() }} resultados
                     </div>
                     <div>
-                        {{ $transactions->links() }}
+                        {{ $transactions->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
