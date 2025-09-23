@@ -13,9 +13,9 @@ class FinancialGoalController extends Controller
         $goals = FinancialGoal::where('user_id', auth()->id())->paginate(10);
 
         $goals->getCollection()->transform(function($goal) {
-        $deadlineDate = Carbon::parse($goal->deadline)->startOfDay(); // força início do dia
-        $today = Carbon::now()->startOfDay(); // também
-        $goal->days_remaining = $deadlineDate->diffInDays($today, false); // false para negativo se venceu
+        $deadlineDate = Carbon::parse($goal->deadline)->startOfDay();
+        $today = Carbon::now()->startOfDay();
+        $goal->days_remaining = $deadlineDate->diffInDays($today, false);
         return $goal;
     });
 
@@ -91,9 +91,9 @@ class FinancialGoalController extends Controller
             ->paginate(10);
 
         $goals->getCollection()->transform(function($goal) {
-        $deadlineDate = Carbon::parse($goal->deadline)->startOfDay(); // força início do dia
-        $today = Carbon::now()->startOfDay(); // também
-        $goal->days_remaining = $deadlineDate->diffInDays($today, false); // false para negativo se venceu
+        $deadlineDate = Carbon::parse($goal->deadline)->startOfDay();
+        $today = Carbon::now()->startOfDay();
+        $goal->days_remaining = $deadlineDate->diffInDays($today, false);
         return $goal;
     });
 
