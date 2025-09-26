@@ -134,7 +134,6 @@
                 </table>
             </div>
             
-            <!-- Paginação -->
             <div class="card-footer bg-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>

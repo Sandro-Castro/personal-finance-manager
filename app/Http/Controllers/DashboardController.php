@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class DashboardController extends Controller
         
         for ($day = 1; $day <= $daysInMonth; $day++) {
             $dayDate = Carbon::create($now->year, $now->month, $day);
-            
+
             $dayIncome = Transaction::where('user_id', $user->id)
                 ->where('type', 'income')
                 ->whereDate('date', $dayDate)

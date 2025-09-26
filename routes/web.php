@@ -50,6 +50,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/goals/{id}', [FinancialGoalController::class, 'destroy'])->name('goals.destroy');
     Route::post('/goals/search', [FinancialGoalController::class, 'search'])->name('goals.search');
 
-    // Rotas para Relatórios
+    
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });

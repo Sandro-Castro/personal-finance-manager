@@ -111,19 +111,4 @@ class TransactionController extends Controller
         return redirect()->route('transactions.index')->with('success', 'Transação excluída com sucesso!');
     }
 
-    public function search(Request $request)
-    {
-        $search = $request->get('search');
-        $transactions = Transaction::where('user_id', auth()->id())
-            ->where('description', 'like', "%{$search}%")
-            ->orWhereHas('category', function($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%");
-            })
-            ->with('category')
-            ->paginate(10);
-            
-        $categories = Category::where('user_id', auth()->id())->get();
-
-        return view('transactions.index', compact('transactions', 'categories', 'search'));
-    }
 }
