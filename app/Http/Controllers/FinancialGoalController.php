@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\FinancialGoal;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -10,7 +11,9 @@ class FinancialGoalController extends Controller
 {
     public function index()
     {
-        $goals = FinancialGoal::where('user_id', auth()->id())->paginate(10);
+        $goals = FinancialGoal::where('user_id', auth()->id())
+        ->with('category')
+        ->paginate(10);
 
         $goals->getCollection()->transform(function($goal) {
         $deadlineDate = Carbon::parse($goal->deadline)->startOfDay();
@@ -24,7 +27,8 @@ class FinancialGoalController extends Controller
 
     public function create()
     {
-        return view('goals.create');
+        $categories = Category::where('user_id', auth()->id())->get();
+        return view('goals.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -35,7 +39,8 @@ class FinancialGoalController extends Controller
             'current_amount' => 'required|numeric|min:0',
             'deadline' => 'required|date',
             'status' => 'required|in:in_progress,completed,cancelled',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string', 
+            'category_id' => 'nullable|exists:categories,id'
         ]);
 
         $data['user_id'] = auth()->id();
@@ -46,14 +51,17 @@ class FinancialGoalController extends Controller
 
     public function show($id)
     {
-        $goal = FinancialGoal::where('user_id', auth()->id())->findOrFail($id);
+        $goal = FinancialGoal::where('user_id', auth()->id())
+        ->with('category')
+        ->findOrFail($id);
         return view('goals.show', compact('goal'));
     }
 
     public function edit($id)
     {
         $goal = FinancialGoal::where('user_id', auth()->id())->findOrFail($id);
-        return view('goals.edit', compact('goal'));
+        $categories = Category::where('user_id', auth()->id())->get();
+        return view('goals.edit', compact('goal'), compact('categories'));
     }
 
     public function update(Request $request, $id)
@@ -66,7 +74,8 @@ class FinancialGoalController extends Controller
             'current_amount' => 'required|numeric|min:0',
             'deadline' => 'required|date',
             'status' => 'required|in:in_progress,completed,cancelled',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id'
         ]);
 
         $goal->update($data);

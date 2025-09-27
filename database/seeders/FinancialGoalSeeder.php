@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\FinancialGoal;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-
+use App\Models\Category;
 class FinancialGoalSeeder extends Seeder
 {
     
@@ -13,6 +13,7 @@ class FinancialGoalSeeder extends Seeder
     {
         $users = User::all();
         foreach ($users as $user) {
+        $categories = Category::where('user_id', $user->id)->get();
         
         FinancialGoal::create([
             'name' => 'Comprar um novo laptop',
@@ -21,7 +22,8 @@ class FinancialGoalSeeder extends Seeder
             'deadline' => now()->addMonths(6),
             'status' => 'in_progress',
             'description' => 'Economizar para comprar um laptop para programação',
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'category_id' => $categories->where('name', 'Salário')->first()->id ?? null,
         ]);
 
         FinancialGoal::create([
@@ -31,7 +33,8 @@ class FinancialGoalSeeder extends Seeder
             'deadline' => now()->addYear(),
             'status' => 'in_progress',
             'description' => 'Economizar para uma viagem nas férias',
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'category_id' => $categories->where('name', 'Freelance')->first()->id ?? null,
         ]);
 
         FinancialGoal::create([
@@ -41,7 +44,8 @@ class FinancialGoalSeeder extends Seeder
             'deadline' => now()->addMonths(18),
             'status' => 'in_progress',
             'description' => 'Criar uma reserva de emergência',
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'category_id' => $categories->where('name', 'Alimentação')->first()->id ?? null,
         ]);
         FinancialGoal::factory()->count(5)->create([
             'user_id' => $user->id
