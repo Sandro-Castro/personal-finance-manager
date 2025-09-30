@@ -24,7 +24,10 @@ O sistema tem como finalidade auxiliar no **controle de gastos, receitas e metas
 
 ### 1. Instalar as dependências do projeto
 ```bash
-composer install
+composer install 
+```
+```bash
+npm install
 ```
 
 ### 2. Configurar o arquivo `.env`
@@ -46,6 +49,9 @@ php artisan migrate --seed
 ### 4. Iniciar o servidor
 ```bash
 php artisan serve
+```
+```bash
+npm run dev
 ```
 
 ### 5. Acessar o sistema
