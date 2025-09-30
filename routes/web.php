@@ -39,7 +39,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transactions/edit/{id}', [TransactionController::class, 'edit'])->name('transactions.edit');
     Route::put('/transactions/update/{id}', [TransactionController::class, 'update'])->name('transactions.update');
     Route::delete('/transactions/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
-    Route::get('/transactions/search', [TransactionController::class, 'search'])->name('transactions.search');
     
     Route::get('/goals', [FinancialGoalController::class, 'index'])->name('goals.index');
     Route::get('/goals/create', [FinancialGoalController::class, 'create'])->name('goals.create');

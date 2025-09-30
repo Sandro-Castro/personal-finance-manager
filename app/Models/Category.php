@@ -22,7 +22,12 @@ class Category extends Model
     public function transactions(): HasMany{
         return $this->hasMany(Transaction::class);
     }
+    public function financialGoals(): HasMany
+    {
+        return $this->hasMany(FinancialGoal::class);
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }
+    
 }
