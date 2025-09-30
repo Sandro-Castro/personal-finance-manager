@@ -11,6 +11,7 @@ class CategoryController extends Controller
     {
         $categories = Category::where('user_id', auth()->id())->paginate(10);
         return view('categories.index', compact('categories'));
+
     }
 
     public function create()
@@ -38,6 +39,7 @@ class CategoryController extends Controller
     {
         $category = Category::where('user_id', auth()->id())->findOrFail($id);
         return view('categories.show', compact('category'));
+        //return view('categories.show', ['category' => $category]);
     }
 
     public function edit($id)
