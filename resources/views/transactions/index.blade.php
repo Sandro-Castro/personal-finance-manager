@@ -119,6 +119,11 @@
                                     <a href="{{ route('transactions.edit', $transaction->id) }}" class="btn btn-primary btn-sm py-1">
                                         <i class="bi bi-pencil"></i>
                                     </a>
+
+                                    <a href="{{ route('transactions.pdf', $transaction) }}" class="btn btn-sm btn-secondary" title="Gerar PDF" target="_blank">
+                                        <i class="bi bi-filetype-pdf"></i>
+                                    </a>
+
                                     <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
@@ -126,6 +131,7 @@
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
+                                    
                                 </div>
                             </td>
                         </tr>

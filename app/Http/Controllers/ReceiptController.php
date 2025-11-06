@@ -6,6 +6,8 @@ use App\Models\Receipt;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class ReceiptController extends Controller
 {
@@ -104,5 +106,21 @@ class ReceiptController extends Controller
         $receipt->delete();
 
         return redirect()->route('receipts.index')->with('success', 'Comprovante excluído com sucesso!');
+    }
+
+    public function pdf(Receipt $receipt)
+    {
+        if (method_exists($this, 'authorize')) {
+            $this->authorize('view', $receipt);
+        } else {
+            if ($receipt->user_id !== Auth::id()) {
+                abort(403);
+            }
+        }
+
+        $pdf = Pdf::loadView('reports.receipt', compact('receipt'))
+                  ->setPaper('a4', 'portrait');
+
+        return $pdf->download("recibo-{$receipt->id}.pdf");
     }
 }

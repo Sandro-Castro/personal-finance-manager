@@ -24,7 +24,6 @@
         </div>
     </div>
 
-    
     <div class="row mb-4">
         <div class="col-12">
             <div class="card bg-white border-0 shadow-sm">
@@ -38,7 +37,6 @@
         </div>
     </div>
 
-    
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="card bg-white border-0 shadow-sm">
@@ -68,9 +66,7 @@
         </div>
     </div>
 
-    
     <div class="row">
-        
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-header bg-white">
@@ -205,6 +201,22 @@
             </div>
         </div>
     </div>
+
+    @if(isset($monthlyChart))
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card h-100">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Evolução dos Últimos 6 Meses</h5>
+                    </div>
+                    <div class="card-body">
+                        {!! $monthlyChart->container() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
 </div>
 @endsection
 
@@ -212,7 +224,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const miniCtx = document.getElementById('miniChart').getContext('2d');
-        const miniChart = new Chart(miniCtx, {
+        new Chart(miniCtx, {
             type: 'line',
             data: {
                 labels: {!! json_encode(array_keys($dailyBalance)) !!},
@@ -224,37 +236,19 @@
                     tension: 0.3,
                     fill: true,
                     pointRadius: 3,
-                    pointBackgroundColor: '#3B71CA',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 1
+                    pointBackgroundColor: '#3B71CA'
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Dia do Mês'
-                        }
-                    },
+                    x: { title: { display: true, text: 'Dia do Mês' } },
                     y: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Saldo (R$)'
-                        },
+                        title: { display: true, text: 'Saldo (R$)' },
                         ticks: {
-                            callback: function(value) {
-                                return 'R$ ' + value.toLocaleString('pt-BR', {minimumFractionDigits: 0});
-                            }
+                            callback: v => 'R$ ' + v.toLocaleString('pt-BR')
                         }
                     }
                 }
@@ -262,4 +256,10 @@
         });
     });
 </script>
+
+
+@if(isset($monthlyChart))
+    <script src="{{ $monthlyChart->cdn() }}"></script>
+    {{ $monthlyChart->script() }}
+@endif
 @endpush

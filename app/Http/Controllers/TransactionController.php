@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+
 
 class TransactionController extends Controller
 {
@@ -111,4 +114,21 @@ class TransactionController extends Controller
         return redirect()->route('transactions.index')->with('success', 'Transação excluída com sucesso!');
     }
 
+    public function pdf(Transaction $transaction)
+    {
+        if (method_exists($this, 'authorize')) {
+            $this->authorize('view', $transaction);
+        } else {
+            if ($transaction->user_id !== Auth::id()) {
+                abort(403);
+            }
+        }
+
+        $pdf = Pdf::loadView('reports.transaction', compact('transaction'))
+                  ->setPaper('a4', 'portrait');
+
+        return $pdf->download("transacao-{$transaction->id}.pdf");
+
+    }
+    
 }

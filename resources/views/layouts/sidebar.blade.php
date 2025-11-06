@@ -28,11 +28,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('reports*') ? 'active' : '' }}" href="{{ url('/reports') }}">
-                    <i class="bi bi-bar-chart me-2"></i> Relatórios
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link {{ Request::is('investments*') ? 'active' : '' }}" href="{{ route('investments.index') }}">
                     <i class="bi bi-graph-up me-2"></i> Investimentos
                 </a>

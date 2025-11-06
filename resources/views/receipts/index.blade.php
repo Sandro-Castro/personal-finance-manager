@@ -47,6 +47,9 @@
                                 <a href="{{ route('receipts.edit', $receipt->id) }}" class="btn btn-sm btn-primary">
                                     <i class="bi bi-pencil"></i>
                                 </a>
+                                <a href="{{ route('receipts.pdf', $receipt) }}" class="btn btn-sm btn-secondary" title="Gerar PDF" target="_blank">
+                                        <i class="bi bi-filetype-pdf"></i>
+                                    </a>
                                 <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
