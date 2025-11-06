@@ -37,23 +37,30 @@ class AuthController extends Controller
     }
 
     public function register(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+{
+    $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8|confirmed',
+        'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+    ]);
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+    $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+    ]);
 
-        Auth::login($user);
-
-        return redirect('home');
+    if ($request->hasFile('profile_photo')) {
+        $imagePath = $request->file('profile_photo')->store('profile-photos', 'public');
+        $user->profile_photo_path = $imagePath;
+        $user->save();
     }
+
+    Auth::login($user);
+
+    return redirect('home');
+}
 
     public function logout(Request $request)
     {
