@@ -29,6 +29,9 @@ composer install
 ```bash
 npm install
 ```
+```bash
+php artisan storage:link
+```
 
 ### 2. Configurar o arquivo `.env`
 Copie o arquivo `.env.example` e renomeie para `.env`:
