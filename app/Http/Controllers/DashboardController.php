@@ -13,8 +13,7 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         $now = Carbon::now();
-        
-        // totais gerais
+
         $totalIncome = Transaction::where('user_id', $user->id)
             ->where('type', 'income')
             ->sum('amount');
@@ -22,8 +21,7 @@ class DashboardController extends Controller
             ->where('type', 'expense')
             ->sum('amount');
         $balance = $totalIncome - $totalExpense;
-        
-        // totais do mês atual
+
         $currentMonthIncome = Transaction::where('user_id', $user->id)
             ->where('type', 'income')
             ->whereYear('date', $now->year)
@@ -37,8 +35,7 @@ class DashboardController extends Controller
             ->sum('amount');
             
         $currentMonthBalance = $currentMonthIncome - $currentMonthExpense;
-        
-        // saldo diário do mês
+
         $dailyBalance = [];
         $daysInMonth = $now->daysInMonth;
         
@@ -58,7 +55,6 @@ class DashboardController extends Controller
             $dailyBalance[$day] = $dayIncome - $dayExpense;
         }
 
-        // gráfico de linha
         $chart = (new LarapexChart)
             ->lineChart()
             ->setTitle('Evolução do Mês')
@@ -70,7 +66,6 @@ class DashboardController extends Controller
             ->setStroke(3)
             ->setGrid();
 
-        // evolução mensal
         $months = collect();
         for ($i = 5; $i >= 0; $i--) {
             $months->push($now->copy()->subMonths($i));
@@ -107,7 +102,6 @@ class DashboardController extends Controller
             ->setXAxis($monthLabels)
             ->setGrid();
 
-        // transações recentes e metas
         $recentTransactions = Transaction::where('user_id', $user->id)
             ->with('category')
             ->orderBy('date', 'desc')

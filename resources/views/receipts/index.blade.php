@@ -10,7 +10,6 @@
     </a>
 </div>
 
-<!-- Formulário de Busca -->
 <div class="card mb-4">
     <div class="card-body">
         <form action="{{ route('receipts.search') }}" method="GET" class="row g-3">
@@ -66,19 +65,19 @@
                         <div class="card-footer bg-white">
                             <div class="btn-group w-100" role="group">
                                 <a href="{{ route('receipts.show', $receipt->id) }}" class="btn btn-sm btn-info">
-                                    <i class="bi bi-eye"></i>
+                                    Mostrar <i class="bi bi-eye"></i>
                                 </a>
                                 <a href="{{ route('receipts.edit', $receipt->id) }}" class="btn btn-sm btn-primary">
-                                    <i class="bi bi-pencil"></i>
+                                    Editar <i class="bi bi-pencil"></i>
                                 </a>
                                 <a href="{{ route('receipts.pdf', $receipt->id) }}" class="btn btn-sm btn-secondary" title="Gerar PDF" target="_blank">
-                                    <i class="bi bi-filetype-pdf"></i>
+                                    Gerar PDF <i class="bi bi-filetype-pdf"></i>
                                 </a>
                                 <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este comprovante?')">
-                                        <i class="bi bi-trash"></i>
+                                        Excluir <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
                             </div>

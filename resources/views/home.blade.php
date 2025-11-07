@@ -73,7 +73,7 @@
                     <h5 class="card-title mb-0">Evolução do Mês</h5>
                 </div>
                 <div class="card-body">
-                    <canvas id="miniChart" height="200"></canvas>
+                    {!! $chart->container() !!}
                 </div>
             </div>
         </div>
@@ -221,42 +221,10 @@
 @endsection
 
 @push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const miniCtx = document.getElementById('miniChart').getContext('2d');
-        new Chart(miniCtx, {
-            type: 'line',
-            data: {
-                labels: {!! json_encode(array_keys($dailyBalance)) !!},
-                datasets: [{
-                    label: 'Saldo Diário',
-                    data: {!! json_encode(array_values($dailyBalance)) !!},
-                    borderColor: '#3B71CA',
-                    backgroundColor: 'rgba(59, 113, 202, 0.1)',
-                    tension: 0.3,
-                    fill: true,
-                    pointRadius: 3,
-                    pointBackgroundColor: '#3B71CA'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { title: { display: true, text: 'Dia do Mês' } },
-                    y: {
-                        title: { display: true, text: 'Saldo (R$)' },
-                        ticks: {
-                            callback: v => 'R$ ' + v.toLocaleString('pt-BR')
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>
-
+@if(isset($chart))
+    <script src="{{ $chart->cdn() }}"></script>
+    {{ $chart->script() }}
+@endif
 
 @if(isset($monthlyChart))
     <script src="{{ $monthlyChart->cdn() }}"></script>
