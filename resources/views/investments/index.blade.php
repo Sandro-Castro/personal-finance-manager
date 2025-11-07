@@ -10,6 +10,30 @@
     </a>
 </div>
 
+<!-- Formulário de Busca -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form action="{{ route('investments.search') }}" method="GET" class="row g-3">
+            <div class="col-md-8">
+                <input type="text" name="search" class="form-control" placeholder="Buscar investimentos por nome, descrição ou tipo..." value="{{ request('search') }}">
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+        </form>
+        @if(request('search'))
+            <div class="mt-2">
+                <a href="{{ route('investments.index') }}" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-x-circle"></i> Limpar busca
+                </a>
+                <span class="text-muted ms-2">Resultados para: "{{ request('search') }}"</span>
+            </div>
+        @endif
+    </div>
+</div>
+
 <div class="card">
     <div class="card-body">
         @if($investments->count() > 0)
@@ -71,17 +95,38 @@
                 </table>
             </div>
             
-            <div class="d-flex justify-content-center mt-4">
-                {{ $investments->links() }}
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="text-muted">
+                    Mostrando {{ $investments->firstItem() }} a {{ $investments->lastItem() }} de {{ $investments->total() }} resultados
+                </div>
+                <div>
+                    {{ $investments->links() }}
+                </div>
             </div>
         @else
             <div class="text-center py-5">
                 <i class="bi bi-graph-up" style="font-size: 3rem;"></i>
-                <h4 class="mt-3">Nenhum investimento encontrado</h4>
-                <p class="text-muted">Comece criando seu primeiro investimento</p>
+                <h4 class="mt-3">
+                    @if(request('search'))
+                        Nenhum investimento encontrado para "{{ request('search') }}"
+                    @else
+                        Nenhum investimento encontrado
+                    @endif
+                </h4>
+                <p class="text-muted">
+                    @if(request('search'))
+                        Tente ajustar os termos da busca ou
+                    @endif
+                    Comece criando seu primeiro investimento
+                </p>
                 <a href="{{ route('investments.create') }}" class="btn btn-primary mt-2">
                     <i class="bi bi-plus-circle"></i> Criar Investimento
                 </a>
+                @if(request('search'))
+                    <a href="{{ route('investments.index') }}" class="btn btn-outline-secondary mt-2 ms-2">
+                        <i class="bi bi-arrow-left"></i> Ver todos os investimentos
+                    </a>
+                @endif
             </div>
         @endif
     </div>

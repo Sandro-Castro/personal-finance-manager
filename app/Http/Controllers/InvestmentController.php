@@ -76,4 +76,18 @@ class InvestmentController extends Controller
 
         return redirect()->route('investments.index')->with('success', 'Investimento excluído com sucesso!');
     }
+     public function search(Request $request)
+    {
+        $search = $request->get('search');
+        
+        $investments = Investment::where('user_id', auth()->id())
+            ->where(function($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%")
+                      ->orWhere('type', 'like', "%{$search}%");
+            })
+            ->paginate(10);
+
+        return view('investments.index', compact('investments', 'search'));
+    }
 }

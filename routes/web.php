@@ -55,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
-
+    Route::get('/investments/search', [InvestmentController::class, 'search'])->name('investments.search');
     Route::get('/investments', [InvestmentController::class, 'index'])->name('investments.index');
     Route::get('/investments/create', [InvestmentController::class, 'create'])->name('investments.create');
     Route::post('/investments', [InvestmentController::class, 'store'])->name('investments.store');
@@ -63,7 +63,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/investments/edit/{id}', [InvestmentController::class, 'edit'])->name('investments.edit');
     Route::put('/investments/update/{id}', [InvestmentController::class, 'update'])->name('investments.update');
     Route::delete('/investments/{id}', [InvestmentController::class, 'destroy'])->name('investments.destroy');
-
+            
+    Route::get('/receipts/search', [ReceiptController::class, 'search'])->name('receipts.search');
     Route::get('/receipts', [ReceiptController::class, 'index'])->name('receipts.index');
     Route::get('/receipts/create', [ReceiptController::class, 'create'])->name('receipts.create');
     Route::post('/receipts', [ReceiptController::class, 'store'])->name('receipts.store');

@@ -10,6 +10,30 @@
     </a>
 </div>
 
+<!-- Formulário de Busca -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form action="{{ route('receipts.search') }}" method="GET" class="row g-3">
+            <div class="col-md-8">
+                <input type="text" name="search" class="form-control" placeholder="Buscar comprovantes por título, descrição ou categoria..." value="{{ request('search') }}">
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+        </form>
+        @if(request('search'))
+            <div class="mt-2">
+                <a href="{{ route('receipts.index') }}" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-x-circle"></i> Limpar busca
+                </a>
+                <span class="text-muted ms-2">Resultados para: "{{ request('search') }}"</span>
+            </div>
+        @endif
+    </div>
+</div>
+
 <div class="card">
     <div class="card-body">
         @if($receipts->count() > 0)
@@ -47,9 +71,9 @@
                                 <a href="{{ route('receipts.edit', $receipt->id) }}" class="btn btn-sm btn-primary">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <a href="{{ route('receipts.pdf', $receipt) }}" class="btn btn-sm btn-secondary" title="Gerar PDF" target="_blank">
-                                        <i class="bi bi-filetype-pdf"></i>
-                                    </a>
+                                <a href="{{ route('receipts.pdf', $receipt->id) }}" class="btn btn-sm btn-secondary" title="Gerar PDF" target="_blank">
+                                    <i class="bi bi-filetype-pdf"></i>
+                                </a>
                                 <form action="{{ route('receipts.destroy', $receipt->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -64,17 +88,38 @@
                 @endforeach
             </div>
             
-            <div class="d-flex justify-content-center mt-4">
-                {{ $receipts->links() }}
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="text-muted">
+                    Mostrando {{ $receipts->firstItem() }} a {{ $receipts->lastItem() }} de {{ $receipts->total() }} resultados
+                </div>
+                <div>
+                    {{ $receipts->links() }}
+                </div>
             </div>
         @else
             <div class="text-center py-5">
                 <i class="bi bi-receipt" style="font-size: 3rem;"></i>
-                <h4 class="mt-3">Nenhum comprovante encontrado</h4>
-                <p class="text-muted">Comece criando seu primeiro comprovante</p>
+                <h4 class="mt-3">
+                    @if(request('search'))
+                        Nenhum comprovante encontrado para "{{ request('search') }}"
+                    @else
+                        Nenhum comprovante encontrado
+                    @endif
+                </h4>
+                <p class="text-muted">
+                    @if(request('search'))
+                        Tente ajustar os termos da busca ou
+                    @endif
+                    Comece criando seu primeiro comprovante
+                </p>
                 <a href="{{ route('receipts.create') }}" class="btn btn-primary mt-2">
                     <i class="bi bi-plus-circle"></i> Criar Comprovante
                 </a>
+                @if(request('search'))
+                    <a href="{{ route('receipts.index') }}" class="btn btn-outline-secondary mt-2 ms-2">
+                        <i class="bi bi-arrow-left"></i> Ver todos os comprovantes
+                    </a>
+                @endif
             </div>
         @endif
     </div>

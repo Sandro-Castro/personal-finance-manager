@@ -191,9 +191,9 @@
                             </a>
                         </div>
                         <div class="col-6">
-                            <a href="{{ route('reports.index') }}" class="btn btn-info w-100 h-100 py-3">
+                            <a href="{{ route('investments.index') }}" class="btn btn-info w-100 h-100 py-3">
                                 <i class="bi bi-bar-chart fs-1 d-block mb-2"></i>
-                                Ver Relatórios
+                                Ver Investimentos
                             </a>
                         </div>
                     </div>

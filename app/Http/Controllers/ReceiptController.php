@@ -38,7 +38,6 @@ class ReceiptController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // 5MB
         ]);
 
-        // Upload da imagem
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('receipts', 'public');
             $data['image_path'] = $imagePath;
@@ -79,9 +78,7 @@ class ReceiptController extends Controller
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:5120'
         ]);
 
-        // Upload da nova imagem, se fornecida
         if ($request->hasFile('image')) {
-            // Excluir a imagem antiga
             if ($receipt->image_path) {
                 Storage::disk('public')->delete($receipt->image_path);
             }
@@ -98,7 +95,6 @@ class ReceiptController extends Controller
     {
         $receipt = Receipt::where('user_id', auth()->id())->findOrFail($id);
 
-        // Excluir a imagem do storage
         if ($receipt->image_path) {
             Storage::disk('public')->delete($receipt->image_path);
         }
@@ -122,5 +118,23 @@ class ReceiptController extends Controller
                   ->setPaper('a4', 'portrait');
 
         return $pdf->download("recibo-{$receipt->id}.pdf");
+    }
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        
+        $receipts = Receipt::where('user_id', auth()->id())
+            ->where(function($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%")
+                      ->orWhereHas('category', function($q) use ($search) {
+                          $q->where('name', 'like', "%{$search}%");
+                      });
+            })
+            ->with('category')
+            ->orderBy('date', 'desc')
+            ->paginate(12);
+
+        return view('receipts.index', compact('receipts', 'search'));
     }
 }
