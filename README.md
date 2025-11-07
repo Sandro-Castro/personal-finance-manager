@@ -32,6 +32,12 @@ npm install
 ```bash
 php artisan storage:link
 ```
+```bash
+composer require barryvdh/laravel-dompdf
+```
+```bash
+composer require arielmejiadev/larapex-charts
+```
 
 ### 2. Configurar o arquivo `.env`
 Copie o arquivo `.env.example` e renomeie para `.env`:
